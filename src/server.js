@@ -9,6 +9,8 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.use(express.urlencoded({extended: true}));//hổ trợ data từ client -> server
+app.use(express.json());
 
 configViewEngine(app);
 initWebRoute(app);

@@ -29,3 +29,20 @@ body {
 a{
   text-decoration: none;
 }
+
+.create__user-container{
+  padding: 15px;
+  text-align: center;
+}
+.create__user-container label{
+  display: block;
+}
+.create__user-container h1{
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.create__user-container .btn-submit{
+  margin-top: 16px;
+  cursor: pointer;
+}
