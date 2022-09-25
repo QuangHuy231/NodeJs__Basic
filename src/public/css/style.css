@@ -46,3 +46,14 @@ a{
   margin-top: 16px;
   cursor: pointer;
 }
+.update-user-container{
+  padding: 15px;
+  text-align: center;
+}
+.update-user-container label{
+  display: block;
+}
+.btn-update{
+  margin-top: 15px;
+  cursor: pointer;
+}
