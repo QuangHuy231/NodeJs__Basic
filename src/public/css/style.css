@@ -57,3 +57,10 @@ a{
   margin-top: 15px;
   cursor: pointer;
 }
+
+.detail-container{
+  text-align: center;
+}
+.detail-container div{
+  margin-top: 16px;
+}
