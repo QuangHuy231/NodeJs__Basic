@@ -64,3 +64,9 @@ a{
 .detail-container div{
   margin-top: 16px;
 }
+.upload-file-container{
+  padding: 16px;
+}
+.upload-file-container label{
+  display: block;
+}
