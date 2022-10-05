@@ -1,45 +1,55 @@
 import express from "express";
 import homeController from "../controller/homeController";
-import multer from 'multer';
-import path from 'path';
+import multer from "multer";
+import path from "path";
 
-var appRoot = require('app-root-path');
+var appRoot = require("app-root-path");
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, appRoot + "/src/public/image/");
-    },
+  destination: function (req, file, cb) {
+    cb(null, appRoot + "/src/public/image/");
+  },
 
-    // By default, multer removes file extensions so let's add them back
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
+  // By default, multer removes file extensions so let's add them back
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
 });
 
-
-const imageFilter = function(req, file, cb) {
-    // Accept images only
-    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
-        req.fileValidationError = 'Only image files are allowed!';
-        return cb(new Error('Only image files are allowed!'), false);
-    }
-    cb(null, true);
+const imageFilter = function (req, file, cb) {
+  // Accept images only
+  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+    req.fileValidationError = "Only image files are allowed!";
+    return cb(new Error("Only image files are allowed!"), false);
+  }
+  cb(null, true);
 };
 
-let upload = multer({storage: storage, fileFilter: imageFilter});
+let upload = multer({ storage: storage, fileFilter: imageFilter });
 
 let router = express.Router();
-const initWebRoute = (app)=>{
-    router.get('/', homeController.getHomePage)
-    router.get('/about', homeController.getAboutPage)
-    router.get('/detail/user/:ID', homeController.getDetailPage)
-    router.post('/create-new-user', homeController.createNewUser)
-    router.post('/delete-user', homeController.deleteUser);
-    router.get('/edit-user/:ID', homeController.getEditPage);
-    router.post('/update-user', homeController.postUpdateUser);
-    router.get('/upload', homeController.getUpLoadFilePage);
-    router.post('/upload-profile-pic', upload.single('profile_pic') , homeController.handleUpLoadFile);
-    router.post('/upload-multiple-pic', upload.array('multiple_pic' , 3), homeController.handleUpLoadMultipleFile);
-    return app.use('/', router);
-}
+const initWebRoute = (app) => {
+  router.get("/", homeController.getHomePage);
+  router.get("/about", homeController.getAboutPage);
+  router.get("/detail/user/:ID", homeController.getDetailPage);
+  router.post("/create-new-user", homeController.createNewUser);
+  router.post("/delete-user", homeController.deleteUser);
+  router.get("/edit-user/:ID", homeController.getEditPage);
+  router.post("/update-user", homeController.postUpdateUser);
+  router.get("/upload", homeController.getUpLoadFilePage);
+  router.post(
+    "/upload-profile-pic",
+    upload.single("profile_pic"),
+    homeController.handleUpLoadFile
+  );
+  router.post(
+    "/upload-multiple-pic",
+    upload.array("multiple_pic", 3),
+    homeController.handleUpLoadMultipleFile
+  );
+  return app.use("/", router);
+};
 module.exports = initWebRoute;
